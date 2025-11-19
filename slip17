@@ -27,3 +27,52 @@ print("Maximum value =", f(x))
 Q.2) Write a Python program to implement A* algorithm. Refer the following graph as an Input for 
 the program.[ Start vertex is A and Goal Vertex is G]  
 
+
+import heapq
+# Graph with edge costs
+graph = {
+    'A': {'B': 9, 'C': 4, 'D': 7},
+    'B': {'E': 11},
+    'C': {'E': 17, 'F': 12},
+    'D': {'F': 14},
+    'E': {'G': 5},
+    'F': {'G': 9},
+    'G': {}
+}
+
+# Heuristic values (h)
+h = {
+    'A': 21,
+    'B': 14,
+    'C': 18,
+    'D': 18,
+    'E': 5,
+    'F': 8,
+    'G': 0
+}
+
+def astar(start, goal):
+    pq = []  # priority queue
+    heapq.heappush(pq, (h[start], 0, start, [start]))  # (f, g, node, path)
+
+    visited = set()
+
+    while pq:
+        f, g, node, path = heapq.heappop(pq)
+        print("Visiting:", node, "| g =", g, "| h =", h[node], "| f =", f)
+
+        if node == goal:
+            print("\nGoal reached! Path:", path)
+            print("Total cost:", g)
+            return
+
+        if node not in visited:
+            visited.add(node)
+
+            for neighbor in graph[node]:
+                g_new = g + graph[node][neighbor]
+                f_new = g_new + h[neighbor]
+                heapq.heappush(pq, (f_new, g_new, neighbor, path + [neighbor]))
+
+# Run A*
+astar('A', 'G')
