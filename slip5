@@ -26,3 +26,40 @@ Q.2) Write a Python program to implement Breadth First Search algorithm. Refer t
 graph as an Input for the program.[Initial node=1,Goal node=8] 
 
 
+from collections import deque
+
+# Graph (directed) based on the given diagram
+graph = {
+    1: [2, 4],
+    2: [3],
+    3: [2, 4, 6, 5],
+    4: [],
+    5: [7, 8],
+    6: [8],
+    7: [8],
+    8: []
+}
+
+def BFS(start, goal):
+    visited = set()
+    queue = deque([start])
+
+    while queue:
+        node = queue.popleft()
+        print("Visiting:", node)
+
+        if node == goal:
+            print("\nGoal", goal, "found!")
+            return
+
+        if node not in visited:
+            visited.add(node)
+            for neighbor in graph[node]:
+                if neighbor not in visited:
+                    queue.append(neighbor)
+
+    print("Goal not found")
+
+# Run BFS
+BFS(1, 8)
+
