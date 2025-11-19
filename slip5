@@ -1,0 +1,28 @@
+Q.1) Write a python program to implement Lemmatization using NLTK
+
+
+from nltk.stem import WordNetLemmatizer
+import nltk
+
+# Download wordnet once
+# nltk.download('wordnet')
+
+text = "The children are playing and the wolves were running fast"
+
+lemmatizer = WordNetLemmatizer()
+
+words = text.split()
+
+print("Original Text:")
+print(text)
+
+print("\nAfter Lemmatization:")
+for w in words:
+    print(w, "→", lemmatizer.lemmatize(w))
+
+
+
+Q.2) Write a Python program to implement Breadth First Search algorithm. Refer the following 
+graph as an Input for the program.[Initial node=1,Goal node=8] 
+
+

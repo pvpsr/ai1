@@ -1,0 +1,40 @@
+Q.1)Write a python program to sort the sentence in alphabetical order? 
+
+
+sentence = input("Enter a sentence: ")
+
+words = sentence.split()
+words.sort()
+
+print("Sorted sentence:")
+print(" ".join(words))
+
+
+
+
+Q.2) Write a Python program for the following Cryptorithmetic problems 
+CROSS+ROADS = DANGER 
+
+
+from itertools import permutations
+
+letters = "CROASDNGER"
+letters = list(dict.fromkeys(letters))    # remove duplicates
+
+for p in permutations(range(10), len(letters)):
+    d = dict(zip(letters, p))
+
+    if d['C'] == 0 or d['R'] == 0 or d['D'] == 0:
+        continue  # no leading zero allowed
+
+    CROSS  = d['C']*10000 + d['R']*1000 + d['O']*100 + d['S']*10 + d['S']
+    ROADS  = d['R']*10000 + d['O']*1000 + d['A']*100 + d['D']*10 + d['S']
+    DANGER = d['D']*100000 + d['A']*10000 + d['N']*1000 + d['G']*100 + d['E']*10 + d['R']
+
+    if CROSS + ROADS == DANGER:
+        print("Solution Found!")
+        print("CROSS =", CROSS)
+        print("ROADS =", ROADS)
+        print("DANGER =", DANGER)
+        print("Mapping:", d)
+        break

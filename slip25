@@ -1,0 +1,125 @@
+Q.1). Build a bot which provides all the information related to you in college 
+
+
+# College Info Bot (simple & short)
+def college_bot():
+    info = {
+        "courses": "BSc CS, BCA, MCA, BBA, BCom",
+        "fees": "Approx ₹25,000 - ₹45,000 per year (depends on course)",
+        "departments": "Computer, IT, Commerce, Management, Science",
+        "timings": "10:00 AM - 5:00 PM",
+        "library": "10000+ books, open 10 AM - 4 PM",
+        "labs": "2 computer labs with 50+ systems and internet",
+        "hostel": "Separate boys/girls hostels available",
+        "sports": "Cricket, Football, Badminton, Kabaddi, Chess",
+        "canteen": "Hygienic food, open till 5 PM",
+        "admission": "Visit college website or office for admission details",
+        "contact": "Phone: 0123-456789, Email: info@college.edu"
+    }
+
+    print("College Info Bot — ask about courses, fees, library, labs, contact (type 'exit' to quit)")
+    while True:
+        q = input("You: ").lower().strip()
+        if q == "exit":
+            print("Bot: Thank you! Good luck 😊")
+            break
+        answered = False
+        for k in info:
+            if k in q:
+                print("Bot:", info[k])
+                answered = True
+                break
+        if not answered:
+            # fallback answers for common patterns
+            if "hello" in q or "hi" in q:
+                print("Bot: Hello! Ask me about courses, fees, labs, timings...")
+            elif "where" in q and "college" in q:
+                print("Bot: We're located at XYZ city — check website for exact address.")
+            else:
+                print("Bot: Sorry, I don't have that info. Try: courses / fees / library / labs / contact")
+                
+if __name__ == "__main__":
+    college_bot()
+
+
+
+Q.2) Write a Python program to solve 8-puzzle problem. 
+
+
+from heapq import heappush, heappop
+
+# Manhattan Distance Heuristic
+def heuristic(state, goal):
+    h = 0
+    for i in range(1, 9):
+        h += abs(state.index(i) - goal.index(i))
+    return h
+
+# Get next possible puzzle states
+def get_neighbors(state):
+    moves = []
+    i = state.index(0)
+    x, y = divmod(i, 3)
+    dirs = [(-1,0),(1,0),(0,-1),(0,1)]
+
+    for dx, dy in dirs:
+        nx, ny = x + dx, y + dy
+        if 0 <= nx < 3 and 0 <= ny < 3:
+            j = nx * 3 + ny
+            new = state[:]
+            new[i], new[j] = new[j], new[i]
+            moves.append(new)
+    return moves
+
+# A* Search
+def astar(start, goal):
+    pq = []
+    heappush(pq, (0, start))
+    visited = set()
+    parent = {tuple(start): None}
+
+    while pq:
+        cost, state = heappop(pq)
+        if state == goal:
+            return parent
+        
+        visited.add(tuple(state))
+
+        for nxt in get_neighbors(state):
+            if tuple(nxt) not in visited:
+                parent[tuple(nxt)] = state
+                g = cost + 1
+                f = g + heuristic(nxt, goal)
+                heappush(pq, (f, nxt))
+    return None
+
+# Print the solution path
+def print_path(parent, goal):
+    path = []
+    cur = tuple(goal)
+    while cur is not None:
+        path.append(cur)
+        cur = parent[cur]
+    path.reverse()
+    for p in path:
+        print(p[0:3])
+        print(p[3:6])
+        print(p[6:9])
+        print()
+
+# MAIN
+start = [1, 2, 3,
+         4, 0, 6,
+         7, 5, 8]
+
+goal =  [1, 2, 3,
+         4, 5, 6,
+         7, 8, 0]
+
+parent = astar(start, goal)
+
+if parent:
+    print("Solution Path:")
+    print_path(parent, goal)
+else:
+    print("No solution found.")

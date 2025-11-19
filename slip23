@@ -1,0 +1,41 @@
+Q.1) Write a Program to Implement Tower of Hanoi using Python.
+
+
+def hanoi(n, source, helper, destination):
+    if n == 1:
+        print(f"Move disk 1 from {source} to {destination}")
+        return
+    hanoi(n-1, source, destination, helper)
+    print(f"Move disk {n} from {source} to {destination}")
+    hanoi(n-1, helper, source, destination)
+
+n = int(input("Enter number of disks: "))
+hanoi(n, 'A', 'B', 'C')
+
+
+
+Q.2) Write a Python program for the following Cryptarithmetic problems 
+SEND + MORE = MONEY 
+
+
+from itertools import permutations
+
+letters = ('S','E','N','D','M','O','R','Y')
+digits = range(10)
+
+for p in permutations(digits, 8):
+    s,e,n,d,m,o,r,y = p
+
+    # Leading letters cannot be zero
+    if s == 0 or m == 0:
+        continue
+
+    send = s*1000 + e*100 + n*10 + d
+    more = m*1000 + o*100 + r*10 + e
+    money = m*10000 + o*1000 + n*100 + e*10 + y
+
+    if send + more == money:
+        print("SEND + MORE = MONEY")
+        print(send, "+", more, "=", money)
+        print(f"S={s}, E={e}, N={n}, D={d}, M={m}, O={o}, R={r}, Y={y}")
+        break

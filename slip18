@@ -1,0 +1,76 @@
+Q.1).Write a python program to remove stop words for a given passage from a text file using 
+NLTK?. 
+
+
+import nltk
+from nltk.corpus import stopwords
+
+nltk.download('stopwords')
+
+# Read from file
+with open("input.txt", "r") as f:
+    text = f.read()
+
+words = text.split()
+stop_words = set(stopwords.words("english"))
+filtered = [w for w in words if w.lower() not in stop_words]
+
+print("Original Text:")
+print(text)
+
+print("\nAfter Removing Stop Words:")
+print(" ".join(filtered))
+
+
+
+Q.2) Implement a system that performs arrangement of some set of objects in a room. Assume that 
+you have only 5 rectangular, 4 square-shaped objects. Use A* approach for the placement of 
+the objects in room for efficient space utilisation. Assume suitable heuristic, and dimensions of 
+objects and rooms. (Informed Search) 
+
+
+import heapq
+
+# Room dimensions (length, width)
+ROOM_W, ROOM_H = 10, 10
+
+# Objects: (name, width, height)
+rectangles = [("R1",3,2), ("R2",2,4), ("R3",3,3), ("R4",4,2), ("R5",2,3)]
+squares    = [("S1",2,2), ("S2",3,3), ("S3",1,1), ("S4",2,2)]
+objects = rectangles + squares
+
+# A* heuristic → remaining area of objects
+def heuristic(obj_list):
+    return sum(w*h for (_,w,h) in obj_list)
+
+# Check if object fits in remaining space
+def fits(used_space, w, h):
+    area_used = sum(a*b for (_,a,b) in used_space)
+    return (area_used + w*h) <= ROOM_W * ROOM_H
+
+# A* Search
+def arrange():
+    pq = []
+    heapq.heappush(pq, (0, [], objects))  # (cost, placed, remaining)
+
+    while pq:
+        cost, placed, remaining = heapq.heappop(pq)
+
+        if not remaining:
+            return placed  # SUCCESS
+
+        for i, (name,w,h) in enumerate(remaining):
+            if fits(placed, w, h):
+                new_placed = placed + [(name, w, h)]
+                new_remaining = remaining[:i] + remaining[i+1:]
+                g = sum(a*b for (_,a,b) in new_placed)
+                h = heuristic(new_remaining)
+                heapq.heappush(pq, (g+h, new_placed, new_remaining))
+
+    return None
+
+result = arrange()
+print("Objects placed efficiently using A*:")
+for name,w,h in result:
+    print(f"{name} => {w}x{h}")
+

@@ -1,0 +1,40 @@
+Q.1)Write a Program to Implement Monkey Banana Problem using Python
+
+
+def monkey_banana():
+    state = {
+        "monkey": "door",
+        "box": "window",
+        "on_box": False,
+        "banana": "middle",
+        "has_banana": False
+    }
+
+    print("Initial State:", state)
+
+    # Step 1: Monkey walks to box
+    state["monkey"] = state["box"]
+    print("\nMonkey moves to the box:", state)
+
+    # Step 2: Monkey pushes box to banana
+    state["box"] = state["banana"]
+    state["monkey"] = state["banana"]
+    print("\nMonkey pushes box under the banana:", state)
+
+    # Step 3: Monkey climbs on the box
+    state["on_box"] = True
+    print("\nMonkey climbs on the box:", state)
+
+    # Step 4: Monkey takes the banana
+    state["has_banana"] = True
+    print("\nMonkey picks the banana:", state)
+
+    print("\nFinal State:", state)
+
+
+monkey_banana()
+
+
+Q.2) Write a program to implement Iterative Deepening DFS algorithm.  
+[ Goal Node =G]
+

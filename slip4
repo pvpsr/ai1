@@ -1,0 +1,86 @@
+Q.1)Write a program to implement Hangman game using python.                          
+Description: 
+Hangman is a classic word-guessing game. The user should guess the word correctly by 
+entering alphabets of the user choice. The Program will get input as single alphabet from the 
+user and it will matchmaking with the alphabets in the original  
+
+
+
+word = "APPLE"
+guessed = []
+attempts = 6
+
+print("Hangman Game")
+
+while attempts > 0:
+    # Print current status
+    display = ""
+    for ch in word:
+        if ch in guessed:
+            display += ch + " "
+        else:
+            display += "_ "
+    print("\nWord:", display)
+
+    # Check win
+    if "_" not in display:
+        print("You guessed it! The word is", word)
+        break
+
+    g = input("Enter a letter: ").upper()
+
+    if g in guessed:
+        print("Already guessed!")
+        continue
+
+    guessed.append(g)
+
+    if g not in word:
+        attempts -= 1
+        print("Wrong! Attempts left:", attempts)
+
+if attempts == 0:
+    print("You lost! The word was", word)
+
+
+
+Q.2) Write a Python program to implement Breadth First Search algorithm. Refer the following 
+graph as an Input for the program.[Initial node=1,Goal node=8]
+
+
+from collections import deque
+
+# Graph based exactly on your diagram
+graph = {
+    1: [2, 3],
+    2: [4, 5],
+    3: [6, 7],
+    4: [8],
+    5: [8],
+    6: [8],
+    7: [8],
+    8: []
+}
+
+def bfs(start, goal):
+    visited = set()
+    queue = deque([start])
+
+    print("BFS Traversal:")
+
+    while queue:
+        node = queue.popleft()
+        print(node, end=" ")
+
+        if node == goal:
+            print("\nGoal Found!")
+            return
+
+        visited.add(node)
+
+        for neighbour in graph[node]:
+            if neighbour not in visited:
+                queue.append(neighbour)
+
+# Run BFS
+bfs(1, 8)

@@ -1,0 +1,57 @@
+Q.1) Write a python program to generate Calendar for the given month and year?
+
+import calendar
+
+# Input month and year
+year = int(input("Enter year: "))
+month = int(input("Enter month (1-12): "))
+
+# Display the calendar
+print("\nCalendar for", month, "/", year)
+print(calendar.month(year, month))
+
+
+
+
+Q.2)Write a Python program to implement Depth First Search algorithm. Refer the following graph 
+as an Input for the program.[Initial node=1,Goal node=7].
+
+
+# DFS Algorithm Implementation
+
+# Graph based on the provided diagram
+graph = {
+    1: [3, 2],
+    2: [4],
+    3: [5, 2],
+    4: [6],
+    5: [3, 7, 4],
+    6: [7],
+    7: []
+}
+
+visited = []
+
+def dfs(graph, node, goal):
+    if node not in visited:
+        print(node, end=" ")
+        visited.append(node)
+
+        if node == goal:
+            return True  # Goal found
+
+        for neighbour in graph[node]:
+            if dfs(graph, neighbour, goal):
+                return True
+
+    return False
+
+
+# Main
+start = 1
+goal = 7
+
+print("DFS Traversal (starting from node 1):")
+found = dfs(graph, start, goal)
+
+print("\nGoal Found?" , found)

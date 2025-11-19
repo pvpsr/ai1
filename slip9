@@ -1,0 +1,96 @@
+Q.1) Write python program to solve 8 puzzle problem using A* algorithm
+
+
+from heapq import heappush, heappop
+
+# Heuristic: Misplaced tiles
+def h(state, goal):
+    return sum(1 for i in range(9) if state[i] != goal[i] and state[i] != "0")
+
+# Generate next states
+def neighbors(state):
+    nxt = []
+    moves = {0:[1,3], 1:[0,2,4], 2:[1,5],
+             3:[0,4,6], 4:[1,3,5,7], 5:[2,4,8],
+             6:[3,7], 7:[4,6,8], 8:[5,7]}
+    zero = state.index("0")
+    for m in moves[zero]:
+        s = list(state)
+        s[zero], s[m] = s[m], s[zero]
+        nxt.append("".join(s))
+    return nxt
+
+# A* Search
+def astar(start, goal):
+    pq = []
+    heappush(pq, (h(start,goal), 0, start, [start]))
+    vis = set()
+
+    while pq:
+        f, g, state, path = heappop(pq)
+
+        if state == goal:
+            return path
+
+        if state in vis: 
+            continue
+        vis.add(state)
+
+        for nxt in neighbors(state):
+            heappush(pq, (g+1 + h(nxt,goal), g+1, nxt, path+[nxt]))
+
+# Input
+start = input("Enter start state (e.g. 123405678): ")
+goal  = input("Enter goal  state (e.g. 123456780): ")
+
+path = astar(start, goal)
+
+print("\nSolution path:")
+for p in path:
+    print(p[0:3], "\n" + p[3:6], "\n" + p[6:9], "\n")
+
+
+
+
+Q.2) Write a Python program to solve water jug problem. 2 jugs with capacity 5 gallon and 7 gallon 
+are given with unlimited water supply respectively. The target to achieve is 4 gallon of water in 
+second jug.
+
+
+from collections import deque
+
+def water_jug():
+    cap5, cap7 = 5, 7
+    target = 4
+    visited = set()
+    q = deque()
+
+    q.append((0, 0))   # (jug5, jug7)
+
+    while q:
+        a, b = q.popleft()
+        print((a, b))
+
+        if b == target:      # target achieved in 7-gallon jug
+            print("Goal reached:", (a, b))
+            return
+
+        if (a, b) in visited:
+            continue
+        visited.add((a, b))
+
+        # Possible operations
+        states = [
+            (cap5, b),         # Fill 5L
+            (a, cap7),         # Fill 7L
+            (0, b),            # Empty 5L
+            (a, 0),            # Empty 7L
+            (a - min(a, cap7 - b), b + min(a, cap7 - b)),  # Pour 5 → 7
+            (a + min(b, cap5 - a), b - min(b, cap5 - a))   # Pour 7 → 5
+        ]
+
+        for s in states:
+            if s not in visited:
+                q.append(s)
+
+water_jug()

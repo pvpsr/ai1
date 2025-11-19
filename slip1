@@ -1,0 +1,79 @@
+Q.1) Python program that demonstrates the hill climbing algorithm to find the maximum of a 
+mathematical function.(For example f(x) = -x^2 + 4x)
+
+import random
+
+# Function to maximize
+def f(x):
+    return -x*x + 4*x
+
+# Hill climbing algorithm
+def hill_climb():
+    # start with a random x between 0 and 5
+    current_x = random.uniform(0, 5)
+    step = 0.01  # small step size
+    improvement = True
+
+    while improvement:
+        improvement = False
+        
+        # Check neighbors (left and right)
+        left_x = current_x - step
+        right_x = current_x + step
+
+        # Move to the better neighbor
+        if f(left_x) > f(current_x):
+            current_x = left_x
+            improvement = True
+        elif f(right_x) > f(current_x):
+            current_x = right_x
+            improvement = True
+
+    return current_x, f(current_x)
+
+# Run hill climbing
+max_x, max_value = hill_climb()
+print("Maximum occurs at x =", round(max_x, 4))
+print("Maximum value f(x) =", round(max_value, 4))
+
+
+
+Q.2) Write a Python program to implement Depth First Search algorithm. Refer the following graph 
+as an Input for the program. [Initial node=1,Goal node=8]
+
+
+# Graph representation using adjacency list
+graph = {
+    1: [2, 3],
+    2: [1, 4, 5],
+    3: [1, 6, 7],
+    4: [2, 8],
+    5: [2, 8],
+    6: [3, 8],
+    7: [3, 8],
+    8: []
+}
+
+visited = set()
+
+def dfs(start, goal):
+    stack = [start]
+
+    while stack:
+        node = stack.pop()
+        
+        if node not in visited:
+            print("Visited:", node)
+            visited.add(node)
+
+            if node == goal:
+                print("Goal", goal, "found!")
+                return
+            
+            # Add neighbors in reverse so leftmost expands first
+            for neighbor in reversed(graph[node]):
+                if neighbor not in visited:
+                    stack.append(neighbor)
+
+# Run DFS
+dfs(1, 8)

@@ -1,0 +1,62 @@
+Q.1) Write a python program using mean end analysis algorithmproblem of transforming a string of 
+lowercase letters into another string.
+
+# Means-End Analysis to transform one string into another
+
+def means_end_analysis(start, goal):
+    print("Start:", start)
+    print("Goal :", goal)
+
+    start = list(start)
+    goal = list(goal)
+
+    steps = 0
+
+    for i in range(len(start)):
+        if start[i] != goal[i]:
+            print(f"Step {steps+1}: Change '{start[i]}' to '{goal[i]}' at position {i}")
+            start[i] = goal[i]
+            steps += 1
+            print("Current:", "".join(start))
+
+    print("\nFinal Output:", "".join(start))
+
+
+# Example
+s1 = "abcde"
+s2 = "axcye"
+means_end_analysis(s1, s2)
+
+
+
+Q.2) Write a Python program to solve water jug problem. Two jugs with capacity 4 gallon and 3 
+gallon are given with unlimited water supply respectively. The target is to achieve 2 gallon of 
+water in second jug.
+
+# Water Jug Problem: Jug A = 4L, Jug B = 3L, Target = 2L in Jug B
+
+def water_jug():
+    A, B = 0, 0       # start with empty jugs
+    steps = []
+
+    while True:
+        if B == 2:    # goal reached
+            steps.append((A, B))
+            break
+
+        if A == 0:            # fill jug A
+            A = 4
+        elif B == 3:          # empty jug B
+            B = 0
+        else:                 # pour A -> B
+            pour = min(A, 3 - B)
+            A -= pour
+            B += pour
+
+        steps.append((A, B))
+
+    print("Steps to reach 2 gallons in Jug B:")
+    for s in steps:
+        print(s)
+
+water_jug()

@@ -1,0 +1,38 @@
+Q.1) Write a python program to remove stop words for a given passage from a text file using 
+NLTK?.
+
+
+# Step 1: Import required libraries
+import nltk
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+
+# Step 2: Download NLTK resources (only first time)
+nltk.download('punkt')
+nltk.download('stopwords')
+
+# Step 3: Read text from a file
+file_path = 'passage.txt'  # replace with your file name
+with open(file_path, 'r') as file:
+    text = file.read()
+
+# Step 4: Tokenize the text into words
+words = word_tokenize(text)
+
+# Step 5: Get the list of English stop words
+stop_words = set(stopwords.words('english'))
+
+# Step 6: Remove stop words
+filtered_words = [word for word in words if word.lower() not in stop_words]
+
+# Step 7: Join filtered words back into a string
+filtered_text = ' '.join(filtered_words)
+
+# Step 8: Display the result
+print("Original Text:\n", text)
+print("\nText after removing stop words:\n", filtered_text)
+
+
+
+Q.2) Write a Python program to implement Breadth First Search algorithm. Refer the following 
+graph as an Input for the program.[Initial node=1,Goal node=8]. 

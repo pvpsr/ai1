@@ -1,0 +1,77 @@
+Q.1Write a Python program to implement Mini-Max Algorithm.
+
+
+# Mini-Max Algorithm in Python
+
+def minimax(depth, nodeIndex, isMax, scores, h):
+    if depth == h:               # Leaf node → return score
+        return scores[nodeIndex]
+
+    if isMax:                    # MAX player's turn
+        return max(minimax(depth+1, nodeIndex*2, False, scores, h),
+                   minimax(depth+1, nodeIndex*2+1, False, scores, h))
+    else:                        # MIN player's turn
+        return min(minimax(depth+1, nodeIndex*2, True, scores, h),
+                   minimax(depth+1, nodeIndex*2+1, True, scores, h))
+
+# Example leaf node values
+scores = [3, 5, 2, 9, 12, 5, 23, 23]
+height = 3
+
+print("Best Value =", minimax(0, 0, True, scores, height))
+
+
+
+
+
+Q.2) Write a Python program to simulate 8-Queens problem.
+
+
+# 8-Queens Problem using Backtracking
+
+board = [[0]*8 for _ in range(8)]
+
+def safe(r, c):
+    # Check row on left
+    for i in range(c):
+        if board[r][i] == 1:
+            return False
+
+    # Check upper diagonal
+    i, j = r, c
+    while i >= 0 and j >= 0:
+        if board[i][j] == 1:
+            return False
+        i -= 1
+        j -= 1
+
+    # Check lower diagonal
+    i, j = r, c
+    while i < 8 and j >= 0:
+        if board[i][j] == 1:
+            return False
+        i += 1
+        j -= 1
+
+    return True
+
+
+def solve(c=0):
+    if c == 8:
+        return True
+
+    for r in range(8):
+        if safe(r, c):
+            board[r][c] = 1
+            if solve(c + 1):
+                return True
+            board[r][c] = 0
+    return False
+
+
+if solve():
+    print("8-Queens Solution:")
+    for row in board:
+        print(row)
+else:
+    print("No solution found")

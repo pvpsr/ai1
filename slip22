@@ -1,0 +1,65 @@
+Q.1) Write a Program to Implement Alpha-Beta Pruning  using Python 
+
+
+# Alpha-Beta Pruning Example
+
+def alphabeta(node, depth, alpha, beta, maximizing, tree):
+    if depth == 0 or node not in tree:
+        return node   # leaf node value
+
+    if maximizing:
+        best = -999
+        for child in tree[node]:
+            val = alphabeta(child, depth-1, alpha, beta, False, tree)
+            best = max(best, val)
+            alpha = max(alpha, best)
+            if alpha >= beta:
+                break
+        return best
+
+    else:
+        best = 999
+        for child in tree[node]:
+            val = alphabeta(child, depth-1, alpha, beta, True, tree)
+            best = min(best, val)
+            beta = min(beta, best)
+            if alpha >= beta:
+                break
+        return best
+
+
+# Example Game Tree with leaf node values
+tree = {
+    'A': ['B', 'C'],
+    'B': [3, 5],
+    'C': [6, 9]
+}
+
+print("Optimal Value:", alphabeta('A', 3, -999, 999, True, tree))
+
+
+
+
+Q.2) Write a Python program to implement Simple Chatbot
+
+
+# Simple Chatbot Program
+
+print("Chatbot: Hello! I am your assistant. Type 'bye' to exit.")
+
+while True:
+    user = input("You: ").lower()
+
+    if user == "bye":
+        print("Chatbot: Goodbye! Have a nice day!")
+        break
+    elif "name" in user:
+        print("Chatbot: I am SimpleBot.")
+    elif "college" in user:
+        print("Chatbot: Your college is very good and student friendly!")
+    elif "course" in user:
+        print("Chatbot: You are learning Python and AI.")
+    elif "hello" in user or "hi" in user:
+        print("Chatbot: Hello! How can I help you?")
+    else:
+        print("Chatbot: Sorry, I don't understand. Try something else.")

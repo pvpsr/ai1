@@ -1,0 +1,61 @@
+Q.1) Write a python program to remove punctuations from the given string? 
+
+# Python program to remove punctuations from a string
+
+punctuations = '''!()-[]{};:'"\,<>./?@#$%^&*_~'''
+
+# Input string
+text = input("Enter a string: ")
+
+# Removing punctuations
+result = ""
+
+for char in text:
+    if char not in punctuations:
+        result = result + char
+
+print("String without punctuations:", result)
+
+
+
+
+Q.2) Write a Python program to implement Depth First Search algorithm. Refer the following graph 
+as an Input for the program.[Initial node=2,Goal node=7]
+
+
+# DFS implementation for the given graph
+
+# Graph based on the image
+graph = {
+    1: [2, 3],
+    2: [1, 4, 5],
+    3: [1, 4],
+    4: [2, 3, 7],
+    5: [2, 6, 7],
+    6: [5, 7],
+    7: [4, 5, 6]
+}
+
+visited = []
+
+def dfs(graph, node, goal):
+    if node not in visited:
+        visited.append(node)
+        print(node, end=" ")
+
+        if node == goal:
+            return True
+
+        for neighbour in graph[node]:
+            if dfs(graph, neighbour, goal):
+                return True
+    return False
+
+
+# Driver code
+start = 2
+goal = 7
+
+print("DFS Traversal starting from node", start)
+dfs(graph, start, goal)
+print("\nGoal node", goal, "reached!")

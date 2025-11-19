@@ -1,0 +1,29 @@
+Q.1) Python program that demonstrates the hill climbing algorithm to find the maximum of a 
+mathematical function.  
+
+def f(x):
+    return -x*x + 4*x
+
+step = 0.1
+x = 0.0
+
+while True:
+    left  = f(x - step)
+    right = f(x + step)
+    best = f(x)
+
+    if left > best:
+        x = x - step
+    elif right > best:
+        x = x + step
+    else:
+        break
+
+print("Maximum at x =", x)
+print("Maximum value =", f(x))
+
+
+
+Q.2) Write a Python program to implement A* algorithm. Refer the following graph as an Input for 
+the program.[ Start vertex is A and Goal Vertex is G]  
+

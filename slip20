@@ -1,0 +1,78 @@
+Q.1) Build a bot which provides all the information related to you in college
+
+def college_bot():
+    print("=== College Information Bot ===")
+    print("Ask anything about: courses, fees, departments, timings, labs, staff, library, etc.")
+    print("Type 'exit' to stop.\n")
+
+    while True:
+        query = input("You: ").lower()
+
+        if query == "exit":
+            print("Bot: Thank you! Have a great day!")
+            break
+
+        elif "course" in query:
+            print("Bot: Our college offers BCS, BCA, BBA, BCom, MSc-CS, and MCA.")
+
+        elif "fees" in query:
+            print("Bot: Fees differ by course. Approx range is ₹25,000 – ₹45,000 per year.")
+
+        elif "department" in query:
+            print("Bot: We have CS, IT, Commerce, Management, and Science departments.")
+
+        elif "timing" in query or "time" in query:
+            print("Bot: College timing is 10:00 AM to 5:00 PM.")
+
+        elif "library" in query:
+            print("Bot: The library has 10,000+ books and is open from 10 AM to 4 PM.")
+
+        elif "lab" in query or "computer lab" in query:
+            print("Bot: The computer lab has 50+ systems with internet access.")
+
+        elif "staff" in query or "teacher" in query:
+            print("Bot: All departments have well-qualified teaching and non-teaching staff.")
+
+        elif "sports" in query:
+            print("Bot: We provide cricket, football, badminton, kabaddi, chess, etc.")
+
+        elif "canteen" in query:
+            print("Bot: Canteen is open till 5 PM and provides hygienic food.")
+
+        else:
+            print("Bot: Sorry, I don't have information about that. Ask something else!")
+
+# Run the bot
+college_bot()
+
+
+
+Q.2) Write a Python program to implement Mini-Max Algorithm.
+
+
+def minimax(depth, node_index, is_max, values, height):
+    # Base case: if leaf node is reached
+    if depth == height:
+        return values[node_index]
+
+    # If current move is of maximizer
+    if is_max:
+        return max(
+            minimax(depth + 1, node_index * 2, False, values, height),
+            minimax(depth + 1, node_index * 2 + 1, False, values, height)
+        )
+    else:
+        # Minimizer move
+        return min(
+            minimax(depth + 1, node_index * 2, True, values, height),
+            minimax(depth + 1, node_index * 2 + 1, True, values, height)
+        )
+
+
+# Driver code
+values = [3, 5, 2, 9, 12, 5, 23, 23]   # leaf node values
+import math
+height = int(math.log(len(values), 2))
+
+print("Leaf Node Values:", values)
+print("Optimal Value (Using Minimax):", minimax(0, 0, True, values, height))

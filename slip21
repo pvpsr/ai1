@@ -1,0 +1,39 @@
+Q.1)Write a python program to remove punctuations from the given string?
+
+
+punct = '''!()-[]{};:'"\,<>./?@#$%^&*_~'''
+
+text = input("Enter a string: ")
+
+no_punct = ""
+for ch in text:
+    if ch not in punct:
+        no_punct += ch
+
+print("After removing punctuations:", no_punct)
+
+
+
+
+Q.2)Write a Python program for the following Cryptarithmetic problems.
+GO + TO = OUT 
+
+
+from itertools import permutations
+
+letters = ('G','O','T','U')
+for p in permutations('0123456789', 4):
+    G, O, T, U = p
+    if G == '0' or T == '0':   # no leading zero
+        continue
+
+    GO  = int(G+O)
+    TO  = int(T+O)
+    OUT = int(O+U+T)
+
+    if GO + TO == OUT:
+        print("Solution:")
+        print(f"G={G}, O={O}, T={T}, U={U}")
+        print(f"{GO} + {TO} = {OUT}")
+        break
+
