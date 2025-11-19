@@ -36,3 +36,40 @@ print("\nText after removing stop words:\n", filtered_text)
 
 Q.2) Write a Python program to implement Breadth First Search algorithm. Refer the following 
 graph as an Input for the program.[Initial node=1,Goal node=8]. 
+
+
+from collections import deque
+# Undirected graph from the given diagram
+graph = {
+    1: [2, 3, 4],
+    2: [1, 4, 5],
+    3: [1, 4],
+    4: [1, 2, 3, 7],
+    5: [2, 6, 7],
+    6: [5, 7],
+    7: [4, 5, 6]
+}
+
+def BFS(start, goal):
+    visited = set()
+    queue = deque([start])
+
+    while queue:
+        node = queue.popleft()
+        print("Visiting:", node)
+
+        if node == goal:
+            print("\nGoal", goal, "found!")
+            return
+
+        visited.add(node)
+
+        for neighbor in graph[node]:
+            if neighbor not in visited:
+                queue.append(neighbor)
+
+    print("Goal not found")
+
+# Run BFS (Goal node 8 does not exist but included for requirement)
+BFS(1, 8)
+
