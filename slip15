@@ -35,6 +35,49 @@ def monkey_banana():
 monkey_banana()
 
 
+
 Q.2) Write a program to implement Iterative Deepening DFS algorithm.  
 [ Goal Node =G]
+
+
+# Tree as adjacency list
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D', 'E'],
+    'C': ['F', 'G'],
+    'D': ['H', 'I'],
+    'E': [],
+    'F': ['K'],
+    'G': [],
+    'H': [],
+    'I': [],
+    'K': []
+}
+
+# Depth Limited Search
+def DLS(node, goal, limit):
+    print(f"Visiting: {node}")
+    if node == goal:
+        return True
+    if limit <= 0:
+        return False
+    
+    for child in graph[node]:
+        if DLS(child, goal, limit - 1):
+            return True
+    return False
+
+# Iterative Deepening DFS
+def IDDFS(start, goal, max_depth):
+    for depth in range(max_depth + 1):
+        print(f"\n--- Depth Limit = {depth} ---")
+        if DLS(start, goal, depth):
+            print(f"\nGoal '{goal}' found at depth {depth}")
+            return
+    print("Goal not found")
+
+# Run
+IDDFS('A', 'G', 10)
+
+
 
